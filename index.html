@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UgPhone Hub - Cày Coin Đổi Tài Khoản</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #0b0f19; color: #e2e8f0; line-height: 1.6; padding: 20px; }
+        .container { max-width: 600px; margin: 40px auto; background: #1f2937; padding: 30px; border-radius: 12px; border: 1px solid #374151; text-align: center; }
+        h1 { color: #fff; margin-bottom: 20px; font-size: 26px; }
+        p { color: #94a3b8; margin-bottom: 20px; }
+        
+        /* Giao diện Ví Coin và Cửa hàng */
+        .wallet-box { background: #111827; border: 1px dashed #10b981; padding: 15px; border-radius: 8px; margin-bottom: 25px; font-size: 18px; }
+        .coin-amount { color: #10b981; font-weight: bold; font-size: 24px; }
+        
+        .btn-link { display: block; background: linear-gradient(135deg, #f43f5e, #e11d48); color: white; text-decoration: none; font-weight: bold; padding: 15px; border-radius: 8px; margin: 20px 0; font-size: 16px; }
+        
+        .shop-box { background: #111827; padding: 20px; border-radius: 8px; border: 1px solid #4b5563; text-align: left; margin-top: 25px; }
+        .shop-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #374151; }
+        .btn-buy { background: #10b981; color: white; padding: 8px 20px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; }
+        .btn-buy:hover { background: #059669; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Hệ Thống Đổi ACC UgPhone Tự Động</h1>
+        
+        <div class="wallet-box">
+            Ví Coin Trên Thiết Bị: <span id="user-coin" class="coin-amount">0</span> COIN
+        </div>
+
+        <p style="color: #cbd5e1;">Cày thêm Coin bằng cách vượt link tài trợ dưới đây:</p>
+        
+        <a href="https://yeulink.com/link-rut-gon-cua-ban" target="_blank" class="btn-link">🚀 Vượt Link Kiếm Coin (+6 COIN)</a>
+        
+        <div class="shop-box">
+            <h3 style="color: #fff; margin-bottom: 10px; border-bottom: 2px solid #3b82f6; padding-bottom: 5px;">🛒 Cửa Hàng Đổi ACC</h3>
+            <div class="shop-item">
+                <div>
+                    <strong>Gói UgPhone Treo Game (1 Ngày)</strong><br>
+                    <span style="color: #94a3b8; font-size: 13px;">Giá bán: 2 Coin / lượt đổi</span>
+                </div>
+                <button onclick="buyUgPhone()" class="btn-buy">Đổi Ngay</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tự động load số coin của máy khách khi vừa vào web
+        window.onload = function() {
+            let myCoin = localStorage.getItem('guest_coin');
+            if (myCoin === null) {
+                localStorage.setItem('guest_coin', '0');
+                myCoin = '0';
+            }
+            document.getElementById('user-coin').innerText = myCoin;
+        }
+
+        // Hàm đổi tài khoản UgPhone (Trừ 2 coin)
+        function buyUgPhone() {
+            let coin = parseInt(localStorage.getItem('guest_coin') || '0');
+
+            if (coin < 2) {
+                alert("Bạn không đủ Coin! Cần
