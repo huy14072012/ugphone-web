@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kho Trả Tài Khoản UgPhone</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #0b0f19; color: #e2e8f0; line-height: 1.6; padding: 20px; }
+        .container { max-width: 550px; margin: 80px auto; background: #111827; padding: 40px; border-radius: 16px; border: 2px solid #3b82f6; text-align: center; box-shadow: 0 0 30px rgba(59, 130, 246, 0.3); }
+        h1 { color: #fff; margin-bottom: 15px; font-size: 26px; }
+        p { color: #94a3b8; margin-bottom: 25px; }
+        .acc-box { background: #1f2937; border: 2px dashed #3b82f6; padding: 20px; border-radius: 8px; font-size: 20px; color: #38bdf8; font-weight: bold; font-family: monospace; margin-bottom: 30px; word-break: break-all; }
+        .btn-back { display: inline-block; background: #4b5563; color: white; padding: 12px 30px; text-decoration: none; border-radius: 6px; font-weight: bold; transition: 0.3s; }
+        .btn-back:hover { background: #374151; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🎉 Đổi Quà Thành Công!</h1>
+        <p>Đây là thông tin tài khoản UgPhone của bạn. Hãy lưu lại hoặc chụp màn hình trước khi thoát ra nhé:</p>
+        
+        <div id="display-acc" class="acc-box">Đang tải tài khoản...</div>
+        
+        <a href="./index.html" class="btn-back">⬅ Quay Lại Cửa Hàng</a>
+    </div>
+
+    <script>
+        window.onload = function() {
+            // Đọc thông tin tài khoản được gửi từ trang chủ
+            const purchasedAcc = localStorage.getItem('last_purchased_acc');
+            
+            if (purchasedAcc) {
+                document.getElementById('display-acc').innerText = purchasedAcc;
+                // Xóa bộ nhớ tạm sau khi hiển thị để bảo mật
+                localStorage.removeItem('last_purchased_acc');
+            } else {
+                document.getElementById('display-acc').innerText = "Không tìm thấy thông tin tài khoản hoặc bạn đã tải lại trang!";
+                document.getElementById('display-acc').style.color = "#ef4444";
+            }
+        }
+    </script>
+</body>
+</html>
