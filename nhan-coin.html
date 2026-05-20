@@ -7,12 +7,11 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         body { background-color: #0b0f19; color: #e2e8f0; line-height: 1.6; padding: 20px; }
-        .container { max-width: 550px; margin: 80px auto; background: #111827; padding: 40px; border-radius: 16px; border: 2px solid #10b981; text-align: center; box-shadow: 0 0 30px rgba(16, 185, 129, 0.2); }
+        .container { max-width: 550px; margin: 80px auto; background: #111827; padding: 40px; border-radius: 16px; border: 2px solid #10b981; text-align: center; }
         .icon-success { font-size: 60px; color: #10b981; margin-bottom: 20px; }
         h1 { color: #fff; margin-bottom: 15px; font-size: 26px; }
         p { color: #94a3b8; margin-bottom: 30px; }
-        .btn-claim { display: inline-block; background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 16px 40px; border-radius: 50px; font-weight: bold; font-size: 18px; border: none; cursor: pointer; transition: 0.3s; text-transform: uppercase; }
-        .btn-claim:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(16, 185, 129, 0.7); }
+        .btn-claim { display: inline-block; background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 16px 40px; border-radius: 50px; font-weight: bold; font-size: 18px; border: none; cursor: pointer; text-transform: uppercase; }
     </style>
 </head>
 <body>
@@ -21,37 +20,31 @@
         <div class="icon-success">💰</div>
         <h1>Vượt Link Thành Công!</h1>
         <p id="msg">Hãy bấm vào nút bên dưới để nạp thêm +6 Coin vào thiết bị của bạn.</p>
-        
         <button id="claim-btn" onclick="claim6Coin()" class="btn-claim">🎁 Nhận +6 Coin Ngay</button>
     </div>
 
     <script>
-        // Kiểm tra xem máy này hôm nay đã nhận coin từ link này chưa để tránh spam F5
         const lastClaimTime = localStorage.getItem('last_time_click_claim');
         const currentTime = new Date().getTime();
 
         window.onload = function() {
-            // Khóa nút trong vòng 10 tiếng sau mỗi lần vượt link thành công (10 tiếng = 36000000 mili-giây)
             if (lastClaimTime && (currentTime - lastClaimTime < 36000000)) {
                 const hoursLeft = Math.ceil((36000000 - (currentTime - lastClaimTime)) / (1000 * 60 * 60));
-                document.getElementById('msg').innerText = "Thiết bị của bạn vừa mới nhận coin rồi! Vui lòng chờ " + hoursLeft + " tiếng nữa hoặc quay lại trang chủ vượt link mới để reset thời gian.";
-                document.getElementById('claim-btn').style.display = "none"; // Ẩn luôn nút nhận coin
+                document.getElementById('msg').innerText = "Thiết bị của bạn vừa mới nhận coin rồi! Vui lòng chờ " + hoursLeft + " tiếng nữa.";
+                document.getElementById('claim-btn').style.display = "none";
             }
         }
 
         function claim6Coin() {
-            // Tiến hành cộng 6 coin vào ví của thiết bị
             let currentCoin = parseInt(localStorage.getItem('guest_coin') || '0');
             currentCoin += 6;
             localStorage.setItem('guest_coin', currentCoin.toString());
-
-            // Lưu thời gian bấm nút để khóa spam
             localStorage.setItem('last_time_click_claim', new Date().getTime());
 
-            alert("Thành công! Đã cộng 6 Coin vào thiết bị của bạn.\nSố dư mới: " + currentCoin + " Coin.");
+            alert("Thành công! Đã cộng 6 Coin vào thiết bị của bạn.");
             
-            // Chuyển hướng đưa khách quay về trang chủ để xem ví tiền và đổi acc UgPhone
-            window.location.href = "index.html";
+            // Dùng lệnh này để ép trình duyệt tải lại trang chủ kèm dữ liệu coin mới
+            window.location.replace("./index.html");
         }
     </script>
 </body>
