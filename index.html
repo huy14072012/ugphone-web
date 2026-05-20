@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UgPhone Hub - Cày Coin Đổi Acc</title>
+    <script src="kho-acc.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #0b0f19; color: #e2e8f0; line-height: 1.6; padding: 20px; }
+        .container { max-width: 600px; margin: 30px auto; background: #1f2937; padding: 30px; border-radius: 12px; border: 1px solid #374151; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
+        h1 { color: #fff; margin-bottom: 20px; font-size: 24px; }
+        p { color: #94a3b8; margin-bottom: 20px; font-size: 15px; }
+        .wallet-box { background: #111827; border: 1px dashed #10b981; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 18px; }
+        .coin-amount { color: #10b981; font-weight: bold; font-size: 24px; }
+        .btn-link { display: block; background: linear-gradient(135deg, #f43f5e, #e11d48); color: white; text-decoration: none; font-weight: bold; padding: 15px; border-radius: 8px; margin: 15px 0; font-size: 16px; transition: 0.2s; }
+        .btn-link:hover { transform: scale(1.02); }
+        .shop-box { background: #111827; padding: 20px; border-radius: 8px; border: 1px solid #4b5563; text-align: left; margin-top: 25px; }
+        .shop-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; }
+        .btn-buy { background: #10b981; color: white; padding: 10px 22px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 15px; }
+        .btn-buy:hover { background: #059669; }
+        .cloud-box { background: #111827; border: 2px solid #38bdf8; border-radius: 12px; padding: 25px; margin-top: 35px; text-align: center; box-shadow: 0 0 15px rgba(56, 189, 248, 0.1); }
+        .cloud-icon { width: 65px; height: 65px; fill: #38bdf8; margin-bottom: 10px; animation: float 3s ease-in-out infinite; }
+        .cloud-title { font-size: 18px; color: #fff; font-weight: bold; margin-bottom: 5px; }
+        .cloud-desc { font-size: 13px; color: #94a3b8; margin-bottom: 15px; }
+        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
+        .btn-cloud { display: block; width: 100%; padding: 14px; border: none; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; text-decoration: none; text-align: center; background: linear-gradient(135deg, #0ea5e9, #2563eb); color: white; transition: 0.2s; }
+        .btn-cloud:hover { transform: scale(1.02); background: linear-gradient(135deg, #38bdf8, #1d4ed8); }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Hệ Thống Kiếm Coin & Treo Máy Đám Mây</h1>
+        
+        <div class="wallet-box">
+            Ví Coin Thiết Bị: <span id="user-coin" class="coin-amount">0</span> COIN
+        </div>
+        <p>Cày thêm Coin bằng cách vượt link tài trợ bên dưới:</p>
+        
+        <a href="https://yeulink.com/link-rut-gon-cua-ban" target="_blank" class="btn-link">🚀 Vượt Link Kiếm Coin (+6 COIN)</a>
+        
+        <div class="shop-box">
+            <h3 style="color: #fff; margin-bottom: 10px; border-bottom: 2px solid #3b82f6; padding-bottom: 5px;">🛒 Đổi Tài Khoản UgPhone</h3>
+            <div class="shop-item">
+                <div>
+                    <strong>Gói Treo Game Hạn Giờ (4 Tiếng)</strong><br>
+                    <span style="color: #94a3b8; font-size: 13px;">Giá bán: 2 Coin / lượt đổi</span>
+                </div>
+                <button onclick="buyUgPhone()" class="btn-buy">Đổi Ngay</button>
+            </div>
+        </div>
+
+        <div class="cloud-box">
+            <svg class="cloud-icon" viewBox="0 0 24 24">
+                <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM19 18H6c-2.21 0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.94 6 12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5 1.53.11c1.56.1 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3z"/>
+            </svg>
+            <div class="cloud-title">Cửa Hàng Cloud Phone Gốc</div>
+            <div class="cloud-desc">Nhấn vào để đến trang quản trị hệ thống nạp và mua máy ảo.</div>
+            <a href="https://clientclone.ayabloxtraicay.site/autobuyugphone.php" target="_blank" class="btn-cloud">🛒 Nhấn Để Đến Trang Mua Máy</a>
+        </div>
+    </div>
+
+    <script>
+        function loadCoin() {
+            let myCoin = localStorage.getItem('guest_coin') || '0';
+            document.getElementById('user-coin').innerText = myCoin;
+        }
+        window.onload = loadCoin;
+        setInterval(loadCoin, 1000);
+
+        function buyUgPhone() {
+            let coin = parseInt(localStorage.getItem('guest_coin') || '0');
+
+            if (coin < 2) {
+                alert("Bạn không đủ Coin! Cần 2 Coin để đổi gói.");
+                return;
+            }
+
+            if (typeof listAcc === 'undefined' || listAcc.length === 0) {
+                alert("Hệ thống kho tài khoản đang bảo trì, vui lòng quay lại sau!");
+                return;
+            }
+
+            // Thuật toán xoay tua acc 4 tiếng theo thời gian thực
+            const currentHour = new Date().getHours(); 
+            let chosenIndex = Math.floor(currentHour / 4) % listAcc.length;
+
+            coin -= 2;
+            localStorage.setItem('guest_coin', coin.toString());
+            document.getElementById('user-coin').innerText = coin;
+
+            localStorage.setItem('last_purchased_acc', listAcc[chosenIndex]);
+            window.location.href = "giu-tai-khoan.html";
+        }
+    </script>
+</body>
+</html>
