@@ -10,13 +10,9 @@
         .container { max-width: 600px; margin: 40px auto; background: #1f2937; padding: 30px; border-radius: 12px; border: 1px solid #374151; text-align: center; }
         h1 { color: #fff; margin-bottom: 20px; font-size: 26px; }
         p { color: #94a3b8; margin-bottom: 20px; }
-        
-        /* Giao diện Ví Coin và Cửa hàng */
         .wallet-box { background: #111827; border: 1px dashed #10b981; padding: 15px; border-radius: 8px; margin-bottom: 25px; font-size: 18px; }
         .coin-amount { color: #10b981; font-weight: bold; font-size: 24px; }
-        
         .btn-link { display: block; background: linear-gradient(135deg, #f43f5e, #e11d48); color: white; text-decoration: none; font-weight: bold; padding: 15px; border-radius: 8px; margin: 20px 0; font-size: 16px; }
-        
         .shop-box { background: #111827; padding: 20px; border-radius: 8px; border: 1px solid #4b5563; text-align: left; margin-top: 25px; }
         .shop-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #374151; }
         .btn-buy { background: #10b981; color: white; padding: 8px 20px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; }
@@ -49,8 +45,8 @@
     </div>
 
     <script>
-        // Tự động load số coin của máy khách khi vừa vào web
-        window.onload = function() {
+        // Hàm tự động load và hiển thị coin chuẩn xác
+        function loadCoin() {
             let myCoin = localStorage.getItem('guest_coin');
             if (myCoin === null) {
                 localStorage.setItem('guest_coin', '0');
@@ -59,9 +55,37 @@
             document.getElementById('user-coin').innerText = myCoin;
         }
 
-        // Hàm đổi tài khoản UgPhone (Trừ 2 coin)
+        window.onload = loadCoin;
+        // Chạy liên tục để cập nhật nếu có thay đổi trang
+        setInterval(loadCoin, 1000);
+
         function buyUgPhone() {
             let coin = parseInt(localStorage.getItem('guest_coin') || '0');
 
             if (coin < 2) {
-                alert("Bạn không đủ Coin! Cần
+                alert("Bạn không đủ Coin! Cần 2 Coin để đổi gói, hãy bấm vượt link để kiếm thêm.");
+                return;
+            }
+
+            // Trừ 2 coin của khách
+            coin -= 2;
+            localStorage.setItem('guest_coin', coin.toString());
+            document.getElementById('user-coin').innerText = coin;
+
+            // KHO TÀI KHOẢN UGPHONE THẬT: Bạn điền các acc của bạn vào đây nhé
+            const listAcc = [
+                "TK: huyugphone1 | MK: huy123",
+                "TK: accugphone2 | MK: vip999",
+                "TK: cloneug3 | MK: gamepro"
+            ];
+            const randomAcc = listAcc[Math.floor(Math.random() * listAcc.length)];
+            
+            // Lưu tài khoản vừa quay được vào bộ nhớ tạm để trang hiển thị đọc được
+            localStorage.setItem('last_purchased_acc', randomAcc);
+
+            // CHUYỂN HƯỚNG SANG TRANG HIỂN THỊ TÀI KHOẢN RIÊNG
+            window.location.href = "giu-tai-khoan.html";
+        }
+    </script>
+</body>
+</html>
